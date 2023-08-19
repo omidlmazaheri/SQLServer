@@ -1,0 +1,21 @@
+USE pubs;
+GO
+
+CREATE PROCEDURE GetAuthorByID
+    @authorID VARCHAR(11)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @authorName VARCHAR(100);
+
+    -- Retrieve author name based on the provided author ID
+    SELECT @authorName = au_lname + ', ' + au_fname
+    FROM authors
+    WHERE au_id = @authorID;
+
+    -- Return the author name
+    SELECT authorName = ISNULL(@authorName, 'Author not found.');
+END;
+
+EXEC GetAuthorByID @authorID = '123';
