@@ -1,0 +1,15 @@
+CREATE PROCEDURE GetTop5BestSellers
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Retrieve top 5 best-selling titles
+    SELECT TOP 5 t.title_id, t.title, t.price, SUM(s.qty) AS total_sales
+    FROM titles t
+    INNER JOIN sales s ON t.title_id = s.title_id
+    GROUP BY t.title_id, t.title, t.price
+    ORDER BY total_sales DESC;
+END;
+
+
+EXEC GetTop5BestSellers;
