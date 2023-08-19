@@ -1,0 +1,126 @@
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255) NOT NULL,
+    Age int
+);
+
+ALTER TABLE Persons
+ALTER COLUMN Age int NOT NULL;
+
+
+CREATE TABLE Persons (
+    ID int NOT NULL UNIQUE,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+
+ALTER TABLE Persons
+ADD UNIQUE (ID);
+
+
+ALTER TABLE Persons
+ADD CONSTRAINT UC_Person UNIQUE (ID,LastName);
+
+ALTER TABLE Persons
+DROP CONSTRAINT UC_Person;
+
+
+
+CREATE TABLE Persons (
+    ID int NOT NULL PRIMARY KEY,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int
+);
+
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    CONSTRAINT PK_Person PRIMARY KEY (ID,LastName)
+);
+
+
+ALTER TABLE Persons
+ADD PRIMARY KEY (ID);
+
+ALTER TABLE Persons
+ADD CONSTRAINT PK_Person PRIMARY KEY (ID,LastName);
+
+ALTER TABLE Persons
+DROP CONSTRAINT PK_Person;
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL PRIMARY KEY,
+    OrderNumber int NOT NULL,
+    PersonID int FOREIGN KEY REFERENCES Persons(PersonID)
+);
+
+CREATE TABLE Orders (
+    OrderID int NOT NULL,
+    OrderNumber int NOT NULL,
+    PersonID int,
+    PRIMARY KEY (OrderID),
+    CONSTRAINT FK_PersonOrder FOREIGN KEY (PersonID)
+    REFERENCES Persons(PersonID)
+);
+
+ALTER TABLE Orders
+ADD FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+ALTER TABLE Orders
+ADD CONSTRAINT FK_PersonOrder
+FOREIGN KEY (PersonID) REFERENCES Persons(PersonID);
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int CHECK (Age>=18)
+);
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255),
+    CONSTRAINT CHK_Person CHECK (Age>=18 AND City='Sandnes')
+);
+ALTER TABLE Orders
+DROP CONSTRAINT FK_PersonOrder;
+
+
+ALTER TABLE Persons
+ADD CHECK (Age>=18);
+
+ALTER TABLE Persons
+DROP CONSTRAINT CHK_PersonAge;
+
+CREATE TABLE Persons (
+    ID int NOT NULL,
+    LastName varchar(255) NOT NULL,
+    FirstName varchar(255),
+    Age int,
+    City varchar(255) DEFAULT 'Sandnes'
+);
+
+CREATE TABLE Orders (
+    ID int NOT NULL,
+    OrderNumber int NOT NULL,
+    OrderDate date DEFAULT GETDATE()
+);
+
+ALTER TABLE Persons
+ADD CONSTRAINT df_City
+DEFAULT 'Sandnes' FOR City;
+
+ALTER TABLE Persons
+ALTER COLUMN City DROP DEFAULT;
+
+ALTER TABLE Persons
+ALTER COLUMN City DROP DEFAULT;
