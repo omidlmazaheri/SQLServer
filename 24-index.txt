@@ -1,0 +1,8 @@
+CREATE INDEX idx_lastname
+ON Persons (LastName);
+
+
+CREATE INDEX idx_pname
+ON Persons (LastName, FirstName);
+
+DROP INDEX table_name.index_name;
