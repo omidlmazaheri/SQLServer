@@ -1,0 +1,15 @@
+SELECT TOP 3 * FROM Customers;
+
+SELECT TOP 50 PERCENT * FROM Customers;
+
+SELECT TOP 3 * FROM Customers WHERE Country='Germany';
+
+SELECT MIN(Price) AS SmallestPrice FROM Products;
+
+SELECT MAX(Price) AS LargestPrice FROM Products;
+
+SELECT COUNT(ProductID) FROM Products;
+
+SELECT AVG(Price) FROM Products;
+
+SELECT SUM(Quantity) FROM OrderDetails;
