@@ -1,0 +1,177 @@
+
+INSERT INTO titles (title_id, title, type, pub_id, price, advance, royalty, ytd_sales)
+VALUES ('BU1032', 'The Art of SQL', 'business', '1389', 39.99, 5000, 10, 0);
+
+
+INSERT INTO titleauthor (au_id, title_id, au_ord, royaltyper)
+VALUES ('AU5678', 'BU1234', 1, 10);
+
+--------------------------------------------------------
+
+CREATE PROCEDURE AddNewBook
+    @title_id VARCHAR(20),
+    @title VARCHAR(100),
+    @type VARCHAR(20),
+    @pub_id VARCHAR(4),
+    @price MONEY,
+    @advance MONEY,
+    @royalty TINYINT,
+    @ytd_sales INT,
+    @au_id VARCHAR(11),
+    @au_ord TINYINT,
+    @royaltyper TINYINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Insert into titles table
+    INSERT INTO titles (title_id, title, type, pub_id, price, advance, royalty, ytd_sales)
+    VALUES (@title_id, @title, @type, @pub_id, @price, @advance, @royalty, @ytd_sales);
+
+    -- Insert into titleauthor table
+    INSERT INTO titleauthor (au_id, title_id, au_ord, royaltyper)
+    VALUES (@au_id, @title_id, @au_ord, @royaltyper);
+END;
+
+
+
+EXEC AddNewBook
+    @title_id = 'BU1234',
+    @title = 'The Book Title',
+    @type = 'fiction',
+    @pub_id = '1234',
+    @price = 19.99,
+    @advance = 1000,
+    @royalty = 8,
+    @ytd_sales = 0,
+    @au_id = 'AU5678',
+    @au_ord = 1,
+    @royaltyper = 10;
+
+
+
+
+
+CREATE PROCEDURE UpdateBookAndAuthor
+    @title_id VARCHAR(20),
+    @title VARCHAR(100),
+    @type VARCHAR(20),
+    @pub_id VARCHAR(4),
+    @price MONEY,
+    @advance MONEY,
+    @royalty TINYINT,
+    @ytd_sales INT,
+    @au_id VARCHAR(11),
+    @au_ord TINYINT,
+    @royaltyper TINYINT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Update titles table
+    UPDATE titles
+    SET title = @title,
+        type = @type,
+        pub_id = @pub_id,
+        price = @price,
+        advance = @advance,
+        royalty = @royalty,
+        ytd_sales = @ytd_sales
+    WHERE title_id = @title_id;
+
+    -- Update titleauthor table
+    UPDATE titleauthor
+    SET au_id = @au_id,
+        au_ord = @au_ord,
+        royaltyper = @royaltyper
+    WHERE title_id = @title_id;
+END;
+
+
+EXEC UpdateBookAndAuthor
+    @title_id = 'BU1234',
+    @title = 'Updated Book Title',
+    @type = 'fiction',
+    @pub_id = '1234',
+    @price = 24.99,
+    @advance = 1500,
+    @royalty = 12,
+    @ytd_sales = 100,
+    @au_id = 'AU5678',
+    @au_ord = 2,
+    @royaltyper = 15;
+
+
+CREATE PROCEDURE DeleteBookAndAuthor
+    @title_id VARCHAR(20)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Delete from titleauthor table
+    DELETE FROM titleauthor
+    WHERE title_id = @title_id;
+
+    -- Delete from titles table
+    DELETE FROM titles
+    WHERE title_id = @title_id;
+END;
+
+
+EXEC DeleteBookAndAuthor
+    @title_id = 'BU1234';
+
+
+
+CREATE PROCEDURE InsertAuthor
+    @au_id VARCHAR(11),
+    @au_lname VARCHAR(40),
+    @au_fname VARCHAR(20),
+    @phone VARCHAR(12),
+    @address VARCHAR(40),
+    @city VARCHAR(20),
+    @state CHAR(2),
+    @zip CHAR(5),
+    @contract BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Insert into authors table
+    INSERT INTO authors (au_id, au_lname, au_fname, phone, address, city, state, zip, contract)
+    VALUES (@au_id, @au_lname, @au_fname, @phone, @address, @city, @state, @zip, @contract);
+END;
+
+
+
+EXEC InsertAuthor
+    @au_id = 'AU5678',
+    @au_lname = 'Smith',
+    @au_fname = 'John',
+    @phone = '555-1234',
+    @address = '123 Main St',
+    @city = 'New York',
+    @state = 'NY',
+    @zip = '12345',
+    @contract = 1;
+
+
+
+
+CREATE PROCEDURE DeleteAuthorAndTitles
+    @au_id VARCHAR(11)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Delete from titleauthor table
+    DELETE FROM titleauthor
+    WHERE au_id = @au_id;
+
+    -- Delete from authors table
+    DELETE FROM authors
+    WHERE au_id = @au_id;
+END;
+
+EXEC DeleteAuthorAndTitles
+    @au_id = 'AU5678';
