@@ -1,0 +1,22 @@
+USE pubs;
+GO
+
+CREATE PROCEDURE GetAuthorsByLastName
+    @lastName VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @authorCount INT;
+
+    -- Retrieve the count of authors with the provided last name
+    SELECT @authorCount = COUNT(*)
+    FROM authors
+    WHERE au_lname = @lastName;
+
+    -- Return the count of authors
+    SELECT authorCount = ISNULL(@authorCount, 0);
+END;
+
+
+EXEC GetAuthorsByLastName @lastName = 'Smith';
