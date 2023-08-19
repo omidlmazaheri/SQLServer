@@ -1,0 +1,13 @@
+CREATE PROCEDURE GetTitlesAndOrders
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Retrieve titles and their orders
+    SELECT t.title_id, t.title_name, o.order_id, o.order_date, o.quantity
+    FROM titles t
+    INNER JOIN orders o ON t.title_id = o.title_id;
+END;
+
+
+EXEC GetTitlesAndOrders;
