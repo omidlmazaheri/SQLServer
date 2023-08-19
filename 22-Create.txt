@@ -1,0 +1,41 @@
+CREATE DATABASE testDB;
+
+DROP DATABASE testDB;
+
+BACKUP DATABASE testDB
+TO DISK = 'D:\backups\testDB.bak';
+
+BACKUP DATABASE testDB
+TO DISK = 'D:\backups\testDB.bak'
+WITH DIFFERENTIAL;
+
+CREATE TABLE Persons (
+    PersonID int,
+    LastName varchar(255),
+    FirstName varchar(255),
+    Address varchar(255),
+    City varchar(255)
+);
+
+
+CREATE TABLE TestTable AS
+SELECT customername, contactname
+FROM customers;
+
+
+DROP TABLE Shippers;
+
+ALTER TABLE Customers
+ADD Email varchar(255);
+
+ALTER TABLE Customers
+DROP COLUMN Email;
+
+ALTER TABLE Persons
+ADD DateOfBirth date;
+
+ALTER TABLE Persons
+ALTER COLUMN DateOfBirth year;
+
+ALTER TABLE Persons
+DROP COLUMN DateOfBirth;
