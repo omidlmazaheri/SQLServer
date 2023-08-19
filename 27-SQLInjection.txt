@@ -1,0 +1,11 @@
+SELECT * FROM Users WHERE UserId = 105 OR 1=1;
+
+
+SELECT UserId, Name, Password FROM Users WHERE UserId = 105 or 1=1;
+
+
+
+SELECT * FROM Users WHERE Name ="" or ""="" AND Pass ="" or ""=""
+
+
+SELECT * FROM Users WHERE UserId = 105; DROP TABLE Suppliers;
