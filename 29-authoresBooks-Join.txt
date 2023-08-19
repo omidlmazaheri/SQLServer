@@ -1,0 +1,13 @@
+CREATE PROCEDURE GetAuthorsAndTitles
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Retrieve authors and their titles
+    SELECT a.au_id, a.au_lname, a.au_fname, t.title_id, t.title
+    FROM authors a
+    INNER JOIN titleauthor ta ON a.au_id = ta.au_id
+    INNER JOIN titles t ON ta.title_id = t.title_id;
+END;
+
+EXEC GetAuthorsAndTitles;
