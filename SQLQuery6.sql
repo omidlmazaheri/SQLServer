@@ -1,0 +1,2 @@
+EXEC edit_authors 
+@au_id1 = '472-27-2349' , @au_lname = 'Gosling' , @au_fname = 'Ryan' , @phone = '423 834-2919' , @address = '5720 McAuley St.' , @city = 'Los Angeeles' , @state = 'CA' , @zip = '94705' , @contract = 1
