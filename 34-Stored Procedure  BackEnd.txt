@@ -1,0 +1,65 @@
+using System;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace ADOUsingStoredProcedure
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            try
+            {
+                //Store the connection string in the ConnectionString variable
+                string ConnectionString = @"data source=LAPTOP-ICA2LCQL\SQLEXPRESS; database=StudentDB; integrated security=SSPI";
+
+                //Create the SqlConnection object
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    //Create the SqlCommand object
+                    SqlCommand cmd = new SqlCommand()
+                    {
+                        CommandText = "spGetStudentById", //Specify the Stored procedure name
+                        Connection = connection, //Specify the connection object where the stored procedure is going to execute
+                        CommandType = CommandType.StoredProcedure //Specify the command type as Stored Procedure
+                    };
+
+                    //Create an instance of SqlParameter
+                    SqlParameter param1 = new SqlParameter
+                    {
+                        ParameterName = "@Id", //Parameter name defined in stored procedure
+                        SqlDbType = SqlDbType.Int, //Data Type of Parameter
+                        Value = 101, //Value passes to the paramtere
+                        Direction = ParameterDirection.Input //Specify the parameter as input
+                    };
+
+                    //Add the parameter to the Parameters property of SqlCommand object
+                    cmd.Parameters.Add(param1);
+
+                    //Open the Connection
+                    connection.Open();
+
+                    //Execute the command i.e. Executing the Stored Procedure using ExecuteReader method
+                    //SqlDataReader requires an active and open connection
+                    SqlDataReader sdr = cmd.ExecuteReader();
+
+                    //Read the data from the SqlDataReader 
+                    //Read() method will returns true as long as data is there in the SqlDataReader
+                    while (sdr.Read())
+                    {
+                        //Accessing the data using the string key as index
+                        Console.WriteLine(sdr["Id"] + ",  " + sdr["Name"] + ",  " + sdr["Email"] + ",  " + sdr["Mobile"]);
+
+                        //Accessing the data using the integer index position as key
+                        //Console.WriteLine(sdr[0] + ",  " + sdr[1] + ",  " + sdr[2] + ",  " + sdr[3]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception Occurred: {ex.Message}");
+            }
+            Console.ReadKey();
+        }
+    }
+}<div class="open_grepper_editor" title="Edit & Save To Grepper"></div>
