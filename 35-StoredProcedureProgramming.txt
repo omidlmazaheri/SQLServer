@@ -1,0 +1,66 @@
+
+
+using System.Data;
+using System.Data.SqlClient;
+
+namespace WinFormsApp1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                string ConnectionString = @"Data Source=MOGHADDAM-PC;Initial Catalog=pubs;Integrated Security=True";
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                {
+                    SqlCommand cmd = new SqlCommand()
+                    {
+                        CommandText = "getAuthorsById",  
+                        CommandType = CommandType.StoredProcedure 
+                    };
+                    SqlParameter param1 = new SqlParameter
+                    {
+                        ParameterName = "@Id", 
+                        SqlDbType = SqlDbType.VarChar, 
+                        Value = textBox1.Text, 
+                        Direction = ParameterDirection.Input 
+                    };
+                    cmd.Parameters.Add(param1);
+
+                    connection.Open();
+
+                    SqlDataReader sdr = cmd.ExecuteReader();
+
+                    DataTable dt = new DataTable();
+                    dt.Load(sdr);
+                    dataGridView1.DataSource = dt;
+                 
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+    }
+}
+---------------------------------------
+
+CREATE PROCEDURE [dbo].[getAuthorsById]
+(
+   @Id nvarchar(11)
+)
+AS
+BEGIN
+     SELECT *     FROM [dbo].[authors]
+     WHERE au_id = @Id
+END
