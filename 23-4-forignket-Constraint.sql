@@ -63,7 +63,7 @@ GO
 
 -- (Parent) درج رکورد در جدول
 INSERT INTO customers 
-	VALUES (103,N'نیک آموز')
+	VALUES (103,N'همکاران')
 GO
 
 -- مشاهده رکوردهای جدول
