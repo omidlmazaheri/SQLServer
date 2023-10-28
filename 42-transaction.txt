@@ -1,0 +1,41 @@
+BEGIN TRANSACTION;  
+DELETE FROM HumanResources.JobCandidate  
+    WHERE JobCandidateID = 13;  
+COMMIT;  
+
+-------------------------------------------------------
+CREATE TABLE ValueTable (id INT);  
+BEGIN TRANSACTION;  
+       INSERT INTO ValueTable VALUES(1);  
+       INSERT INTO ValueTable VALUES(2);  
+ROLLBACK;  
+-----------------------------------------
+Naming a transaction
+DECLARE @TranName VARCHAR(20);  
+SELECT @TranName = 'MyTransaction';  
+  
+BEGIN TRANSACTION @TranName;  
+USE AdventureWorks2022;  
+DELETE FROM AdventureWorks2022.HumanResources.JobCandidate  
+    WHERE JobCandidateID = 13;  
+  
+COMMIT TRANSACTION @TranName;  
+GO  
+---------------------------------------------------
+USE tempdb;  
+GO  
+CREATE TABLE ValueTable ([value] INT);  
+GO  
+  
+DECLARE @TransactionName VARCHAR(20) = 'Transaction1';  
+  
+BEGIN TRAN @TransactionName  
+       INSERT INTO ValueTable VALUES(1), (2);  
+ROLLBACK TRAN @TransactionName;  
+  
+INSERT INTO ValueTable VALUES(3),(4);  
+  
+SELECT [value] FROM ValueTable;  
+  
+DROP TABLE ValueTable;  
+----------------------------------------------
