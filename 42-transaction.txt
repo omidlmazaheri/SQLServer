@@ -39,3 +39,54 @@ SELECT [value] FROM ValueTable;
   
 DROP TABLE ValueTable;  
 ----------------------------------------------
+Declare @ErrNo int
+Begin Transaction;
+	Insert into Authors(Au_id, au_lname, au_fname, Phone, contract)
+		values ('112-33-1811', 'Jane', 'Marey', '409 210-2331', 1);
+	Set @ErrNo = @@Error;
+	if @ErrNo != 0
+	Begin
+  		Print 'Error Occurred. Transaction Cancelled';
+		RollBack;        
+	End
+	else
+   	Begin
+               Print 'Data Inserted.';
+               Commit;       
+	End
+Begin Transaction;
+--------------------------------------------------------------------------------
+Insert into Authors(Au_id, au_lname, au_fname, Phone)
+values('112-33-1234', 'Billy', 'Jones', '409 234-2232');
+Set @ErrNo = @@Error;
+if @ErrNo != 0
+        Begin
+               Print 'Error Occurred. Transaction Cancelled';
+               RollBack;       
+	End
+else
+        Begin
+               Print 'Data Inserted.';
+               Commit;       
+	End
+-------------------------------------------------------------------------------
+BEGIN TRANSACTION
+BEGIN TRY
+
+UPDATE HESAP SET BAKIYE = BAKIYE - 1000
+WHERE Name='Name' AND Surname='Surname'
+
+UPDATE HESAP SET BAKIYE = BAKIYE + 1000
+WHERE Name='Name' AND Surname='Surname'
+
+COMMIT
+END TRY
+---------------------------
+BEGIN TRAN T1;  
+UPDATE table1 ...;  
+BEGIN TRAN M2 WITH MARK;  
+UPDATE table2 ...;  
+SELECT * from table1;  
+COMMIT TRAN M2;  
+UPDATE table3 ...;  
+COMMIT TRAN T1;
