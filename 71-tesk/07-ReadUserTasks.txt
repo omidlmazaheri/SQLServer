@@ -1,0 +1,9 @@
+CREATE PROCEDURE ReadUserTasks
+    @UserID INT
+AS
+BEGIN
+    SELECT T.TaskID, T.TaskName, T.Description, T.Status
+    FROM Tasks T
+    INNER JOIN UserTasks UT ON T.TaskID = UT.TaskID
+    WHERE UT.UserID = @UserID;
+END

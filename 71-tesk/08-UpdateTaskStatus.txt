@@ -1,0 +1,10 @@
+CREATE PROCEDURE UpdateTaskStatus
+    @TaskID INT,
+    @Status VARCHAR(20),
+    @CompletedDate DATETIME
+AS
+BEGIN
+    UPDATE Tasks
+    SET Status = @Status, CompletedDate = @CompletedDate
+    WHERE TaskID = @TaskID;
+END

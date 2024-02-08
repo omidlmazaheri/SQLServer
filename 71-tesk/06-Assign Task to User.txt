@@ -1,0 +1,16 @@
+CREATE PROCEDURE AssignTaskToUser
+    @UserID INT,
+    @TaskID INT,
+    @IsAdministrator BIT
+AS
+BEGIN
+    IF @IsAdministrator = 1
+    BEGIN
+        INSERT INTO UserTasks (UserID, TaskID)
+        VALUES (@UserID, @TaskID);
+    END
+    ELSE
+    BEGIN
+        RAISEERROR ('Only administrators can assign tasks.', 16, 1);
+    END
+END

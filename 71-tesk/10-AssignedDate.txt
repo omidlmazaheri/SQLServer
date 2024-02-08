@@ -1,0 +1,11 @@
+CREATE PROCEDURE GetDelayedTasks
+    @ThresholdDays INT
+AS
+BEGIN
+    SELECT T.TaskID, T.TaskName, T.Description, T.CompletedDate, U.UserName
+    FROM Tasks T
+    INNER JOIN AssignedTasks AT ON T.TaskID = AT.TaskID
+    INNER JOIN Users U ON AT.UserID = U.UserID
+    WHERE T.Status = 'In Progress'
+        AND T.CompletedDate < DATEADD(DAY, -@ThresholdDays, GETDATE());
+END

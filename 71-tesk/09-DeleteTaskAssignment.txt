@@ -1,0 +1,6 @@
+CREATE PROCEDURE DeleteTaskAssignment
+    @UserTaskID INT
+AS
+BEGIN
+    DELETE FROM UserTasks WHERE UserTaskID = @UserTaskID;
+END

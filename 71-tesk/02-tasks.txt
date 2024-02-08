@@ -1,0 +1,6 @@
+TaskID (Primary Key, Auto-increment)
+TaskName (VARCHAR, Unique)
+Description (VARCHAR)
+Status (ENUM: ‘Pending’, ‘In Progress’, ‘Completed’)
+CreatedDate (DATETIME)
+CompletedDate (DATETIME, Nullable)

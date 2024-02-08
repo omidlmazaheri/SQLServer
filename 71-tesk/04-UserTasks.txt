@@ -1,0 +1,5 @@
+UserTaskID (Primary Key, Auto-increment)
+UserID (Foreign Key referencing Users.UserID)
+TaskID (Foreign Key referencing Tasks.TaskID)
+IsAdministrator (BOOLEAN, Default: 0)
+AssignedDate

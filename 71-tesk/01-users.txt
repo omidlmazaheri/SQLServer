@@ -1,0 +1,4 @@
+UserID (Primary Key, Auto-increment)
+UserName (VARCHAR, Unique)
+Email (VARCHAR)
+RoleID (Foreign Key referencing Roles.RoleID)
